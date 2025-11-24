@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外理公司管理制度汇编</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #1e5799 0%, #207cca 100%);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .departments {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .department-card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border-left: 4px solid #207cca;
+            text-align: center;
+        }
+        
+        .department-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .department-card h3 {
+            color: #207cca;
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+        
+        .department-card p {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            color: #333;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .back-btn:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .pdf-list {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-top: 20px;
+        }
+        
+        .pdf-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .pdf-item:last-child {
+            border-bottom: none;
+        }
+        
+        .pdf-item:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .pdf-name {
+            font-weight: 500;
+            flex: 1;
+        }
+        
+        .pdf-link {
+            color: #207cca;
+            text-decoration: none;
+            padding: 6px 12px;
+            border: 1px solid #207cca;
+            border-radius: 4px;
+            transition: all 0.3s;
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+        
+        .pdf-link:hover {
+            background-color: #207cca;
+            color: white;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .file-info {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 5px;
+        }
+        
+        .department-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .local-folder-info {
+            background: #e7f3ff;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #207cca;
+        }
+        
+        @media (max-width: 768px) {
+            .departments {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .pdf-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .pdf-link {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+            
+            .department-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .department-header h2 {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>外理公司管理制度汇编</h1>
+            <p class="subtitle">点击部门查看相关规章制度文件</p>
+        </header>
+        
+        <div class="local-folder-info">
+            <h3>本地PDF文件夹关联说明</h3>
+            <p>本系统已关联到当前目录下的部门文件夹</p>
+            <p>点击PDF文件链接将直接打开本地PDF文件</p>
+        </div>
+        
+        <div id="mainContent">
+            <div class="departments" id="departmentsList">
+                <!-- 部门卡片将通过JavaScript动态生成 -->
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 外理公司管理制度系统 | 最后更新: 2025年11月24日</p>
+        </footer>
+    </div>
+
+    <script>
+        // 部门数据
+        const departments = [
+            { name: "业务部", count: 7, color: "#1e5799" },
+            { name: "人力资源部", count: 12, color: "#207cca" },
+            { name: "信息技术部", count: 7, color: "#2980b9" },
+            { name: "商务部", count: 8, color: "#3498db" },
+            { name: "安技部", count: 36, color: "#5dade2" },
+            { name: "综合部", count: 37, color: "#85c1e9" },
+            { name: "财务部", count: 33, color: "#aed6f1" }
+        ];
+
+        // PDF文件数据 - 关联本地文件
+        const pdfFiles = {
+            "业务部": [
+                {name: "QQGGJWLGL 03001-2024理货服务质量管理办法.pdf", size: "224,648"},
+                {name: "QQGGJWLGL 03002-2022客户满意度评价实施细则.pdf", size: "458,253"},
+                {name: "QQGGJWLGL 03004-2022理货生产调度管理办法.pdf", size: "159,465"},
+                {name: "QQGGJWLGL 03006-2022业务查询、出证工作服务实施细则.pdf", size: "166,638"},
+                {name: "QQGGJWLGL 03011-2024客户服务管理办法.pdf", size: "206,751"},
+                {name: "QQGGJWLGL 03013-2022统计工作管理办法.pdf", size: "166,203"},
+                {name: "QQGGJWLGL 03019-2024理货质量管理实施细则.pdf", size: "190,544"}
+            ],
+            "人力资源部": [
+                {name: "QQGGJWLGL 06001-2022培训管理规定.pdf", size: "164,754"},
+                {name: "QQGGJWLGL 06002-2024员工请、销假及考勤管理办法.pdf", size: "204,918"},
+                {name: "QQGGJWLGL 06003-2024.A绩效考核管理办法.pdf", size: "185,664"},
+                {name: "QQGGJWLGL 06004-2021社会保险管理办法.pdf", size: "147,788"},
+                {name: "QQGGJWLGL 06005-2021企业年金管理办法.pdf", size: "150,746"},
+                {name: "QQGGJWLGL 06007-2021人员引进与流动管理办法.pdf", size: "147,787"},
+                {name: "QQGGJWLGL 06008-2021领导干部选拔任用管理办法.pdf", size: "197,975"},
+                {name: "QQGGJWLGL 06009-2022员工职业发展通道实施细则.pdf", size: "233,463"},
+                {name: "QQGGJWLGL 10001-2021共青团团费收缴、使用和管理的规定.pdf", size: "134,696"},
+                {name: "QQGGJWLGL 10002-2021三会一课管理办法.pdf", size: "141,679"},
+                {name: "QQGGJWLGL 10003-2021党支部主题党日管理办法.pdf", size: "139,189"},
+                {name: "QQGGJWLGL 12001-2021领导人员廉洁从业管理办法.pdf", size: "158,830"},
+                {name: "青岛外轮理货有限公司员工奖惩管理规定.pdf", size: "542,731"}
+            ],
+            "信息技术部": [
+                {name: "QQGGJWLGL 07001-2023信息化工作管理办法.pdf", size: "282,912"},
+                {name: "QQGGJWLGL 07002-2023数据管理办法.pdf", size: "278,482"},
+                {name: "QQGGJWLGL 07003-2023通信管理办法.pdf", size: "230,264"},
+                {name: "QQGGJWLGL 07004-2023网络安全管理办法.pdf", size: "426,581"},
+                {name: "QQGGJWLGL 07005-2023信息化项目管理办法.pdf", size: "253,677"},
+                {name: "QQGGJWLGL 07006-2023信息系统运维管理办法.pdf", size: "307,368"},
+                {name: "QQGGJWLGL 07008-2023软件正版化管理办法.pdf", size: "259,583"}
+            ],
+            "商务部": [
+                {name: "QQGGJWLGL 03012-2021市场开发管理办法.pdf", size: "145,837"},
+                {name: "QQGGJWLGL 03014-2024费收管理办法.pdf", size: "206,570"},
+                {name: "QQGGJWLGL 03015-2021业务合同管理办法.pdf", size: "133,885"},
+                {name: "QQGGJWLGL 03016-2024投资管理办法.pdf", size: "256,732"},
+                {name: "QQGGJWLGL 03017-2023合同履行管理办法.pdf", size: "220,181"},
+                {name: "QQGGJWLGL 03018-2023合同管理办法.pdf", size: "244,447"},
+                {name: "QQGGJWLGL 11004-2023合法合规性审查程序规定.pdf", size: "196,566"},
+                {name: "QQGGJWLGL 11005-2023合规管理办法.pdf", size: "226,328"}
+            ],
+            "安技部": [
+                {name: "QQGGJWLGL 01001-2021标准化管理实施细则.pdf", size: "210,610"},
+                {name: "QQGGJWLGL 01002-2021V2规章制度管理办法.pdf", size: "290,364"},
+                {name: "QQGGJWLGL 01003-2023群众性质量活动管理办法.pdf", size: "353,207"},
+                {name: "QQGGJWLGL 01004-2024 内部审核管理办法.pdf", size: "158,224"},
+                {name: "QQGGJWLGL 01005-2024 管理目标与方案管理办法.pdf", size: "228,887"},
+                {name: "QQGGJWLGL 01006-2025实物资产管理办法.pdf", size: "497,396"},
+                {name: "QQGGJWLGL 01007-2025老旧设备、废旧物资管理办法.pdf", size: "281,692"},
+                {name: "QQGGJWLGL 01008-2025实物资产标签管理规定.pdf", size: "342,287"},
+                {name: "QQGGJWLGL 01009-2025废旧硒鼓管理办法.pdf", size: "222,046"},
+                {name: "QQGGJWLGL 02001-2021五个文明管理规定.pdf", size: "323,766"},
+                {name: "QQGGJWLGL 02002-2024.A安全培训管理规定.pdf", size: "238,010"},
+                {name: "QQGGJWLGL 02003-2024.A劳动防护用品管理办法.pdf", size: "203,148"},
+                {name: "QQGGJWLGL 02005-2021岗前安全技能测试管理规定.pdf", size: "122,187"},
+                {name: "QQGGJWLGL 02006-2024安全生产风险分级管控体系建设实施细则.pdf", size: "402,128"},
+                {name: "QQGGJWLGL 02008-2024安全生产异常事件报告和调查处理办法.pdf", size: "237,230"},
+                {name: "QQGGJWLGL 02009-2022生产安全事故隐患排查治理管理规定.pdf", size: "214,887"},
+                {name: "QQGGJWLGL 02010-2023生产安全事故调查处理办法.pdf", size: "213,720"},
+                {name: "QQGGJWLGL 02011-2024消防安全管理办法.pdf", size: "508,705"},
+                {name: "QQGGJWLGL 02013-2022创新管理办法.pdf", size: "151,200"},
+                {name: "QQGGJWLGL 02014-2025车辆管理办法.pdf", size: "311,536"},
+                {name: "QQGGJWLGL 02016-2024环境因素识别与评价管理办法.pdf", size: "291,179"},
+                {name: "QQGGJWLGL 02018-2021安全生产信息管理办法.pdf", size: "165,205"},
+                {name: "QQGGJWLGL 02019-2021领导班子安全管理责任考核规定.pdf", size: "133,318"},
+                {name: "QQGGJWLGL 02020-2021职工安全违章处罚管理办法.pdf", size: "174,645"},
+                {name: "QQGGJWLGL 02021-2021本质安全型班组建设实施细则.pdf", size: "167,984"},
+                {name: "QQGGJWLGL 02022-2024安全检查管理办法.pdf", size: "258,413"},
+                {name: "QQGGJWLGL 02023-2022生产安全事故应急管理办法.pdf", size: "161,650"},
+                {name: "QQGGJWLGL 02024-2024安全生产会议管理规定.pdf", size: "119,220"},
+                {name: "QQGGJWLGL 02025-2022知识产权管理办法.pdf", size: "301,755"},
+                {name: "QQGGJWLGL 02026-2023设备和信息化委外维修管理办法.pdf", size: "188,408"},
+                {name: "QQGGJWLGL 02029-2024业务发包、出租安全管理办法.pdf", size: "290,049"},
+                {name: "QQGGJWLGL 02030-2023特殊作业安全管理规定.pdf", size: "368,954"},
+                {name: "QQGGJWLGL 02031-2024.A环境保护管理办法.pdf", size: "253,672"},
+                {name: "QQGGJWLGL 02032-2024职业健康卫生管理办法.pdf", size: "198,524"},
+                {name: "QQGGJWLGL 02033-2024安全生产举报奖励办法（试行）.pdf", size: "219,764"},
+                {name: "《外理公司安全操作规程》 （试行）.pdf", size: "404,861"}
+            ],
+            "综合部": [
+                {name: "QQGGJWLGL 04002-2024公务用车管理办法.pdf", size: "225,625"},
+                {name: "QQGGJWLGL 04003-2024着装管理办法.pdf", size: "109,916"},
+                {name: "QQGGJWLGL 04006-2024物资采购管理办法.pdf", size: "207,800"},
+                {name: "QQGGJWLGL 08004-2021厂务公开民主管理办法.pdf", size: "192,091"},
+                {name: "QQGGJWLGL 08005-2024职工代表大会管理办法.pdf", size: "162,585"},
+                {name: "QQGGJWLGL 08006-2024工会劳动保护工作办法.pdf", size: "125,369"},
+                {name: "QQGGJWLGL 08007-2021劳动模范管理办法.pdf", size: "168,429"},
+                {name: "QQGGJWLGL 08008-2021工会财务管理办法.pdf", size: "255,801"},
+                {name: "QQGGJWLGL 08009-2021工会困难职工帮扶救助管理办法（试行）.pdf", size: "182,790"},
+                {name: "QQGGJWLGL 08010-2021基层工会经费收支管理实施细则（试行）.pdf", size: "213,270"},
+                {name: "QQGGJWLGL 08011-2021民意直通机制管理办法.pdf", size: "164,012"},
+                {name: "QQGGJWLGL 08012-2024管理评审管理办法.pdf", size: "119,673"},
+                {name: "QQGGJWLGL 09001-2022公文处理工作实施细则.pdf", size: "158,866"},
+                {name: "QQGGJWLGL 09002-2023.A印章使用管理办法.pdf", size: "139,780"},
+                {name: "QQGGJWLGL 09003-2024值守应急工作管理办法.pdf", size: "164,835"},
+                {name: "QQGGJWLGL 09004-2021接待工作管理办法.pdf", size: "159,813"},
+                {name: "QQGGJWLGL 09005-2023业务招待管理办法.pdf", size: "178,318"},
+                {name: "QQGGJWLGL 09006-2023.A请假出差管理办法.pdf", size: "217,008"},
+                {name: "QQGGJWLGL 09007-2024通讯费管理办法.pdf", size: "92,910"},
+                {name: "QQGGJWLGL 09008-2024档案管理办法.pdf", size: "617,117"},
+                {name: "QQGGJWLGL 09009-2021档案分类编号管理办法.pdf", size: "192,318"},
+                {name: "QQGGJWLGL 09010-2021文件材料归档管理办法.pdf", size: "253,600"},
+                {name: "QQGGJWLGL 09011-2022保密工作管理办法.pdf", size: "119,490"},
+                {name: "QQGGJWLGL 10011-2021宣传媒介管理办法.pdf", size: "148,923"},
+                {name: "QQGGJWLGL 10012-2021信访工作管理办法.pdf", size: "191,446"},
+                {name: "QQGGJWLGL 10013-2022突发事件网络舆情应急处置管理办法.pdf", size: "143,822"},
+                {name: "QQGGJWLGL 10014-2024 宣传工作管理办法（试行）.pdf", size: "435,560"},
+                {name: "QQGGJWLGL 10401-2021职工健康查体管理办法.pdf", size: "97,526"},
+                {name: "QQGGJWLGL 10402-2021环境卫生管理办法.pdf", size: "110,795"},
+                {name: "QQGGJWLGL 10403-2021职工宿舍管理办法.pdf", size: "164,544"},
+                {name: "QQGGJWLGL 10404-2021行政后勤管理办法.pdf", size: "111,671"},
+                {name: "QQGGJWLGL 10405-2021非生产性房屋维修管理办法.pdf", size: "147,352"},
+                {name: "QQGGJWLGL 10407-2023存货管理办法.pdf", size: "128,379"},
+                {name: "中共青岛外轮理货有限公司委员会第一议题制度.pdf", size: "108,656"},
+                {name: "中共青岛外轮理货有限公司委员会研究决定、前置研究讨论事项清单.pdf", size: "411,666"},
+                {name: "中共青岛外轮理货有限公司委员会议事规则.pdf", size: "430,633"},
+                {name: "中共青岛外轮理货有限公司委员会贯彻落实三重一大决策制度实施办法.pdf", size: "421,117"},
+                {name: "青岛外轮理货有限公司总经理办公会议事规则.pdf", size: "165,883"},
+                {name: "青岛外轮理货有限公司档案分类方案、文件档案材料归档范围和保管期限三合一制度.pdf", size: "583,279"},
+                {name: "青岛外轮理货有限公司董事会审计委员会议事规则.pdf", size: "383,130"},
+                {name: "青岛外轮理货有限公司通勤车管理规定.pdf", size: "360,947"}
+            ],
+            "财务部": [
+                {name: "QQGGJWLGL 05001-2023会计核算管理办法.pdf", size: "254,517"},
+                {name: "QQGGJWLGL 05002-2023往来账项管理办法.pdf", size: "189,127"},
+                {name: "QQGGJWLGL 05003-2023税务管理办法.pdf", size: "216,437"},
+                {name: "QQGGJWLGL 05004-2023现金管理办法.pdf", size: "248,592"},
+                {name: "QQGGJWLGL 05005-2024银行存款管理办法.pdf", size: "203,194"},
+                {name: "QQGGJWLGL 05006-2023票据管理办法.pdf", size: "187,277"},
+                {name: "QQGGJWLGL 05007-2024资金支付审批管理办法.pdf", size: "175,784"},
+                {name: "QQGGJWLGL 05008-2023收入管理办法.pdf", size: "207,286"},
+                {name: "QQGGJWLGL 05009-2023应收款项管理办法.pdf", size: "250,100"},
+                {name: "QQGGJWLGL 05010-2023客户信用管理办法.pdf", size: "318,800"},
+                {name: "QQGGJWLGL 05011-2023 成本费用管理办法.pdf", size: "233,859"},
+                {name: "QQGGJWLGL 05012-202308业务外包管理办法.pdf", size: "216,080"},
+                {name: "QQGGJWLGL 05013-2023后勤业务外包管理实施细则.pdf", size: "191,550"},
+                {name: "QQGGJWLGL 05014-2023机械设备维保、租赁业务外包管理实施细则.pdf", size: "209,472"},
+                {name: "QQGGJWLGL 05016-2023文化传媒业务外包管理实施细则.pdf", size: "192,462"},
+                {name: "QQGGJWLGL 05017-2023信息化业务外包管理实施细则.pdf", size: "190,461"},
+                {name: "QQGGJWLGL 05018-2023资产评估工作管理办法.pdf", size: "244,797"},
+                {name: "QQGGJWLGL 05020-2023固定资产管理办法.pdf", size: "276,341"},
+                {name: "QQGGJWLGL 05021-2023低值易耗品管理办法.pdf", size: "220,870"},
+                {name: "QQGGJWLGL 05022-2023固定资产移交管理办法.pdf", size: "195,089"},
+                {name: "QQGGJWLGL 05024-2023经营绩效分析管理办法.pdf", size: "208,465"},
+                {name: "QQGGJWLGL 05025-2023财务信息化管理办法.pdf", size: "197,137"},
+                {name: "QQGGJWLGL 05026-2023财务档案管理办法.pdf", size: "388,921"},
+                {name: "QQGGJWLGL 05027-2024职工福利费管理办法.pdf", size: "185,414"},
+                {name: "QQGGJWLGL 05028-2023违规经营投资责任追究管理办法.pdf", size: "310,551"},
+                {name: "QQGGJWLGL 05029-2024内部控制管理办法.pdf", size: "207,634"},
+                {name: "QQGGJWLGL 05030-2023保险业务管理办法.pdf", size: "245,060"},
+                {name: "QQGGJWLGL 05031-2023投资项目后评价管理办法.pdf", size: "236,710"},
+                {name: "QQGGJWLGL 05032-2024安全生产费用管理办法.pdf", size: "428,303"},
+                {name: "QQGGJWLGL 05033-2023劳务业务外包管理实施细则.pdf", size: "218,632"},
+                {name: "QQGGJWLGL 05034-2023政策争取管理办法（试行）.pdf", size: "179,488"},
+                {name: "QQGGJWLGL 05035-2024资产减值测试管理办法.pdf", size: "182,988"},
+                {name: "QQGGJWLGL 05067-2023全面预算管理办法.pdf", size: "244,764"}
+            ]
+        };
+
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            renderDepartments();
+        });
+
+        // 渲染部门列表
+        function renderDepartments() {
+            const mainContent = document.getElementById('mainContent');
+            mainContent.innerHTML = `
+                <div class="departments" id="departmentsList">
+                    ${departments.map(dept => `
+                        <div class="department-card" style="border-left-color: ${dept.color}">
+                            <h3>${dept.name}</h3>
+                            <p>规章制度：${dept.count}项</p>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            // 添加部门卡片点击事件
+            document.querySelectorAll('.department-card').forEach((card, index) => {
+                card.addEventListener('click', () => {
+                    showPDFs(departments[index].name);
+                });
+            });
+        }
+
+        // 显示PDF文件列表
+        function showPDFs(departmentName) {
+            const mainContent = document.getElementById('mainContent');
+            const files = pdfFiles[departmentName] || [];
+            
+            let pdfListHTML = `
+                <button class="back-btn" id="backToDepartments">← 返回部门列表</button>
+                <div class="department-header">
+                    <h2>${departmentName}规章制度</h2>
+                    <span>共 ${files.length} 项</span>
+                </div>
+                <div class="pdf-list">
+            `;
+            
+            files.forEach(file => {
+                // 使用相对路径指向当前目录下的部门文件夹
+                const localPath = `${departmentName}/${file.name}`;
+                
+                pdfListHTML += `
+                    <div class="pdf-item">
+                        <div>
+                            <div class="pdf-name">${file.name}</div>
+                            <div class="file-info">文件大小: ${file.size} 字节</div>
+                        </div>
+                        <a href="${localPath}" class="pdf-link" target="_blank">查看</a>
+                    </div>
+                `;
+            });
+            
+            pdfListHTML += '</div>';
+            mainContent.innerHTML = pdfListHTML;
+            
+            // 添加返回按钮事件
+            document.getElementById('backToDepartments').addEventListener('click', renderDepartments);
+        }
+    </script>
+</body>
+</html>
